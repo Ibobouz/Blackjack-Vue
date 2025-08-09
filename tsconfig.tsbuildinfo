@@ -1,0 +1,1 @@
+{"root":["./src/main.ts","./src/vite-env.d.ts","./src/composables/usedeck.ts","./src/router/index.ts","./src/store/game.ts","./src/app.vue","./src/components/card.vue","./src/components/controls.vue","./src/components/gameboard.vue","./src/components/message.vue","./src/views/gamestarted.vue","./src/views/moneybetpage.vue","./src/views/startpage.vue"],"version":"5.8.3"}

@@ -1,7 +1,11 @@
-<!-- src/components/Card.vue -->
 <template>
   <img :src="img" :alt="alt" class="card" />
 </template>
+
+<style scoped>
+/* Card sizing comes from global .card */
+</style>
+
 
 <script lang="ts">
 import { defineComponent } from 'vue';

@@ -1,8 +1,15 @@
 <template>
-  <button @click="game.startGame()">Draw Cards</button>
-  <button @click="game.drawCard()">New Card</button>
-  <button @click="game.cashOut()">Cash Out</button>
+  <div class="controls">
+    <button class="primary" @click="game.startGame()">Draw Cards</button>
+    <button class="primary" @click="game.drawCard()">New Card</button>
+    <button class="accent"  @click="game.cashOut()">Cash Out</button>
+  </div>
 </template>
+
+<style scoped>
+/* Controls styled globally */
+</style>
+
 
 <script lang="ts">
 import { defineComponent } from 'vue';

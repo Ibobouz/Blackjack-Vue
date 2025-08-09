@@ -4,7 +4,7 @@ export interface Card {
   img: string;
 }
 
-// src/composables/useDeck.ts
+
 import hearts_A   from '@/assets/cards/hearts_A.png';
 import hearts_2   from '@/assets/cards/hearts_2.png';
 import hearts_3   from '@/assets/cards/hearts_3.png';

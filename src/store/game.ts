@@ -1,26 +1,22 @@
-// 1) Importiere defineStore wie gehabt
 import { defineStore } from 'pinia';
 import type { Card } from '@/composables/useDeck';
 import { pickRandomCard } from '@/composables/useDeck';
 
-// 2) Erweitere das Interface um chips und currentBet
+
 export interface GameState {
   cards: Card[];
   sum: number;
   isAlive: boolean;
   hasBlackjack: boolean;
   message: string;
-
-  // neu:
   playerName: string;
-  chips: number;        // aktueller Kontostand
-  currentBet: number;   // gerade gesetzter Einsatz
+  chips: number;       
+  currentBet: number;  
   roundFinished: boolean;
   roundSettled: boolean
 }
 
 export const useGameStore = defineStore('game', {
-  // 3) Initial-State anpassen
   state: (): GameState => ({
     cards: [],
     sum: 0,
@@ -28,7 +24,6 @@ export const useGameStore = defineStore('game', {
     hasBlackjack: false,
     message: '',
 
-    // neu initialisieren (z.B. aus localStorage oder Standard 100)
     playerName: '',
     chips: Number(localStorage.getItem('chips') ?? 200),
     currentBet: Number(localStorage.getItem('currentBet')) || 0,
@@ -43,17 +38,17 @@ export const useGameStore = defineStore('game', {
       return Number(card.value);
     },
 
-    // 1) startGame: zwei Karten ziehen, Summe berechnen, Flags setzen
+    
     startGame() {
       this.isAlive = true;
       this.hasBlackjack = false;
       this.roundFinished = false;
       this.roundSettled = false; 
-      // Ziehe zwei Karten
+
       this.cards = [ pickRandomCard(), pickRandomCard() ];
-      // Berechne Summe
+ 
       this.sum = this.cards.reduce((total, c) => total + this.cardValue(c), 0);
-      // Aktualisiere Meldung
+
       if (this.sum < 21) {
         this.message = 'Draw a new card?';
       } else if (this.sum === 21) {
@@ -68,7 +63,7 @@ export const useGameStore = defineStore('game', {
       }
     },
 
-    // 2) drawCard: eine Karte ziehen, Summe updaten, Flags prüfen
+
     drawCard() {
       if (!this.isAlive || this.hasBlackjack) return;
       const card = pickRandomCard();
@@ -90,28 +85,22 @@ export const useGameStore = defineStore('game', {
       }
     },
     
-
-    // 4) Setter für den Einsatz
     setBet(amount: number) {
       this.currentBet = amount;
       localStorage.setItem('currentBet', String(amount));
     },
 
-    // 5) Chips laden (falls Du es nicht schon in state() machst)
     loadChips() {
     const item = localStorage.getItem('chips');
     this.chips = item !== null 
     ? Number(item)
-    : 200;              // Default, falls noch kein Eintrag da
-}
-,
+    : 200;          
+    },
 
-    // 6) Chips speichern
     saveChips() {
       localStorage.setItem('chips', String(this.chips));
     },
-
-    // 7) Beim Spielabschluss aufrufen  
+ 
     finalizeGame(win: boolean) {
       if (win) {
         this.chips += this.currentBet;
@@ -145,18 +134,16 @@ settleRound() {
   let delta = 0;
 
   if (this.sum > 21) {
-    // Bust loses the bet
     delta = -this.currentBet;
     this.message = `Busted! You lost $${this.currentBet}.`;
   } else {
-    // Your payout rule (e.g., 21 pays differently if you want)
     const wins = this.privatePayout(this.sum, this.currentBet);
     delta = wins;
     this.message = `You've won $${wins}.`;
   }
 
   this.chips += delta;
-  this.saveChips(); // <- ALWAYS persist here
+  this.saveChips(); 
 
   this.currentBet = 0;
   localStorage.removeItem('currentBet');
@@ -165,21 +152,17 @@ settleRound() {
   this.isAlive = false;
 },
 
-
-  /** Cash-Out Button → sofort auszahlen */
 cashOut() {
   if (this.roundSettled) return;
 
-  // Freeze the round if it wasn't marked finished yet
   if (!this.roundFinished) {
     this.roundFinished = true;
-    this.isAlive = false; // player stands / stops drawing
+    this.isAlive = false; 
   }
 
   this.settleRound();
 },
 
-  /** Runde für neues Spiel/Route säubern */
   resetRound({ keepBet = true }: { keepBet?: boolean } = {}) {
     this.cards = [];
     this.sum = 0;

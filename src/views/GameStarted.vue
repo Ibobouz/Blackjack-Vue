@@ -1,31 +1,39 @@
 <template>
-  <div class="game-page">
-    <p>
-      Bet: <strong>{{ game.currentBet }}$</strong> |
-      Remaining Chips: <strong>{{ game.chips - game.currentBet }}$</strong>
-    </p>
+  <div class="page">
+    <div class="overlay-card section game-card">
+      <div class="status">
+        <span>Bet: <strong>{{ game.currentBet }}$</strong></span>
+        <span class="sep">|</span>
+        <span>Remaining Chips: <strong>{{ game.chips - game.currentBet }}$</strong></span>
+      </div>
+      <div>
+         <span class="status">Player: <strong>{{ game.playerName }}</strong></span>
+      </div>
 
-    <!-- Kartendarstellung -->
-    <GameBoard />
+      <GameBoard />
 
-    <!-- Kontroll-Buttons -->
-    <div class="controls">
-      <button @click="onDrawCards" :disabled="game.isAlive || game.roundFinished">Draw Cards</button>
-      <button @click="onNewCard"   :disabled="!game.isAlive || game.hasBlackjack">New Card</button>
-      <button @click="cashOut"    :disabled="game.roundSettled || (!game.isAlive && !game.roundFinished)">Cash Out</button>
-      <button @click="backToStart":disabled="game.isAlive">Return To Menu</button>
+      <div class="controls">
+        <button class="primary" @click="onDrawCards" :disabled="game.isAlive || game.roundFinished">Draw Cards</button>
+        <button class="primary" @click="onNewCard"   :disabled="!game.isAlive || game.hasBlackjack">New Card</button>
+        <button class="accent"  @click="cashOut"     :disabled="game.roundSettled || (!game.isAlive && !game.roundFinished)">Cash Out</button>
+        <button class="ghost"   @click="backToStart" :disabled="game.isAlive">Return To Menu</button>
+      </div>
     </div>
-
-    <!-- Statusmeldung -->
-    <Message :text="game.message" />
   </div>
 </template>
+
+<style scoped>
+.game-card { text-align: center; }
+.status { display: flex; gap: .5rem; align-items: center; justify-content: center; }
+.status strong { color: var(--gold); }
+</style>
+
 <script setup lang="ts">
 import { onMounted } from 'vue';
 import { useRouter } from 'vue-router';
 import { useGameStore } from '@/store/game';
 import GameBoard from '@/components/GameBoard.vue';
-import Message   from '@/components/Message.vue';
+
 
 const game   = useGameStore();
 const router = useRouter();
@@ -35,11 +43,11 @@ onMounted (() => {
 })
 
 function onDrawCards() {
-  game.startGame();          // Punkten, Summen, Flags initialisieren
+  game.startGame();          
 }
 
 function onNewCard() {
-  game.drawCard();           // Eine Karte ziehen
+  game.drawCard();       
 }
 
 function cashOut() {
@@ -47,9 +55,9 @@ function cashOut() {
 }
 
 function backToStart() {
-  // Safety net: if the user bails early, make sure we settle & persist once.
+
   if (!game.roundSettled && (game.isAlive || game.roundFinished)) {
-    game.cashOut(); // this will settle once and persist chips
+    game.cashOut(); 
   }
   game.resetRound({keepBet: false})
   game.saveChips()

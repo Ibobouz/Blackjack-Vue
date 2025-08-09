@@ -1,26 +1,43 @@
 <template>
-  <div class="bet-page">
-    <h1>Blackjack</h1>
-    <p>How much you want to bet?</p>
+  <div class="page">
+    <div class="overlay-card section bet-card">
+      <h1 class="title">Place Your Bet</h1>
+      <p class="subtitle">How much do you want to bet?</p>
 
-    <div class="button-row">
-      <button class="CountButton" @click="decreaseBet" :disabled="betDisplay <= minBet">-</button>
-      <span class="counter">{{ betDisplay }}</span>
-      <button class="CountButton" @click="increaseBet" :disabled="betDisplay >= game.chips">+</button>
+      <div class="button-row">
+        <button class="circle primary" @click="decreaseBet" :disabled="betDisplay <= minBet">−</button>
+        <div class="bet-display" aria-live="polite">{{ betDisplay }}</div>
+        <button class="circle primary" @click="increaseBet" :disabled="betDisplay >= game.chips">+</button>
+      </div>
+
+      <p class="error" v-if="errorMessage">{{ errorMessage }}</p>
+
+      <div class="button-row">
+        <button id="startGame" class="primary" @click="startGame"
+                :disabled="betDisplay < minBet || betDisplay > game.chips">
+          Start Game
+        </button>
+        <button class="ghost" @click="$router.back()">Back</button>
+      </div>
     </div>
-
-    <p class="error-message" v-if="errorMessage">{{ errorMessage }}</p>
-
-    <button id="startGame" @click="startGame" :disabled="betDisplay < minBet || betDisplay > game.chips">
-      START GAME
-    </button>
-
-    <p id="player">
-      Player: <strong>{{ game.playerName || '—' }}</strong>
-      | Chips: <strong>{{ game.chips }}</strong>
-    </p>
   </div>
 </template>
+
+<style scoped>
+.bet-card { text-align: center; }
+.bet-display {
+  min-width: 120px;
+  padding: .65rem 1rem;
+  border-radius: 14px;
+  border: 1px solid rgba(255,255,255,.2);
+  background: rgba(0,0,0,.25);
+  font-weight: 800;
+  font-size: clamp(1.4rem, 4vw, 2rem);
+  color: var(--gold);
+  box-shadow: inset 0 0 20px rgba(255,255,255,.05);
+}
+</style>
+
 
 <script setup lang="ts">
 import { ref, computed, onMounted } from 'vue';
@@ -30,21 +47,17 @@ import { useGameStore } from '@/store/game';
 const game = useGameStore();
 const router = useRouter();
 
-// initiale Werte laden
 onMounted(() => {
   game.loadChips();
   game.loadPlayerName();
 });
 
-// minimale und maximale Grenzen
 const minBet = 5;
 const maxBet = computed(() => game.chips);
 
-// lokal reaktiver Einsatz-Zähler
 const betDisplay = ref<number>(Math.min(game.currentBet || minBet, game.chips));
 const errorMessage = ref<string>('');
 
-// Einsatz erhöhen
 function increaseBet() {
   errorMessage.value = '';
   if (betDisplay.value + minBet > game.chips) {
@@ -55,7 +68,6 @@ function increaseBet() {
   }
 }
 
-// Einsatz verringern
 function decreaseBet() {
   errorMessage.value = '';
   if (betDisplay.value - minBet < minBet) {
@@ -66,11 +78,8 @@ function decreaseBet() {
   }
 }
 
-// Spielstart und Persistenz
 function startGame() {
-  // in Store übernehmen & speichern
   game.setBet(betDisplay.value);
-  // weiter zur Spielansicht
   router.push({ name: 'Game' });
 }
 </script>
