@@ -1,12 +1,19 @@
-import { defineConfig } from 'vite';
-import vue from '@vitejs/plugin-vue';
-import path from 'path';  // jetzt dank esModuleInterop erlaubt
+import { defineConfig } from 'vite'
+import vue from '@vitejs/plugin-vue'
+import { VitePWA } from 'vite-plugin-pwa'
+import { fileURLToPath, URL } from 'node:url'
 
 export default defineConfig({
-  resolve: {
+  plugins: [
+    vue(),
+    VitePWA({
+      registerType: 'autoUpdate',
+      includeAssets: ['icons/favicon.svg'],
+    })
+  ],
+   resolve: {
     alias: {
-      '@': path.resolve(__dirname, 'src')
+      '@': fileURLToPath(new URL('./src', import.meta.url))
     }
-  },
-  plugins: [vue()]
-});
+  }
+  })
