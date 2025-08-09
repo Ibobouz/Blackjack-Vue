@@ -1,5 +1,33 @@
-# Vue 3 + TypeScript + Vite
+<div align="center">
+  <img src="public/android-chrome-192x192.png" alt="Blackjack Logo" width="120" />
 
-This template should help get you started developing with Vue 3 and TypeScript in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
+  # 🃏 Blackjack Vue
 
-Learn more about the recommended Project Setup and IDE Support in the [Vue Docs TypeScript Guide](https://vuejs.org/guide/typescript/overview.html#project-setup).
+  **A modern, mobile-friendly Blackjack game built with Vue 3, TypeScript & Vite**
+  
+  <a href="https://blackjackvue.netlify.app/" target="_blank">
+    ▶️ **Play Now**
+  </a>
+</div>
+
+---
+
+## 📖 About the Project
+
+What started as a simple **JavaScript course project** on [scrimba.com](https://scrimba.com)  
+quickly turned into something much more ambitious.
+
+- Began as a **basic Blackjack** in plain JS.
+- Rebuilt from scratch in **Vue 3 + TypeScript + Vite** for better structure, maintainability, and UI flexibility.
+- Added **new game logic, betting system, and polished user interface** with a modern glass/gold theme.
+- Fully **responsive** and optimized for mobile devices — playable as a standalone PWA.
+
+> *"Where there's a will, there's a way."* – This project is the first step on my bigger journey as a Vue developer.
+
+---
+
+## ✨ Features
+
+- 🎨 **Modern UI** with glass overlays & gold accents
+- 📱 **Responsive de**
+
