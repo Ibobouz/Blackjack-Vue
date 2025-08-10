@@ -72,18 +72,24 @@ git clone https://github.com/DeinGitHubUser/blackjack-vue.git
 cd blackjack-vue
 ```
 ## Install dependencies
+```bash
 npm install
+```
 
 ## Run in development mode
+```bash
 npm run dev
+```
 
 ## Build for production
+```bash
 npm run build
+```
 
 ## 📌 Roadmap
- Add Decision Algorhitm between the Card A (Value 1 or 11)
+* Add Decision Algorhitm between the Card A (Value 1 or 11)
 
- Add animations for dealing cards
+* Add animations for dealing cards
 
 ## 📜 License
 This project is licensed under the MIT License – feel free to use and adapt.
