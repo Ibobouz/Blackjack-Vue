@@ -6,7 +6,7 @@
   **A modern, mobile-friendly Blackjack game built with Vue 3, TypeScript & Vite**
   
   <a href="https://blackjackvue.netlify.app/" target="_blank">
-    ▶️ **Play Now**
+    ▶️ Play Now
   </a>
 </div>
 
@@ -63,20 +63,6 @@ quickly turned into something much more ambitious.
 | **Netlify** | Hosting & CI/CD                 |
 
 ---
-
-## 📂 Project Structure
-
-blackjack-vue/
-├── public/ # Static assets (favicons, manifest, redirects)
-├── src/
-│ ├── assets/ # CSS & images (table, cards, etc.)
-│ ├── components/ # Reusable UI components
-│ ├── store/ # Pinia game store
-│ ├── views/ # Main pages (Start, Bet, Game)
-│ ├── App.vue # Root component
-│ ├── main.ts # Entry point
-│ └── router/ # Vue Router setup
-└── vite.config.ts # Vite configuration
 
 ## ⚙️ Setup & Development
 
