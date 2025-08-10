@@ -84,17 +84,17 @@ blackjack-vue/
 ```bash
 git clone https://github.com/DeinGitHubUser/blackjack-vue.git
 cd blackjack-vue
-
+```
 ## Install dependencies
 npm install
 
 ## Run in development mode
 npm run dev
 
-##Build for production
+## Build for production
 npm run build
 
-##📌 Roadmap
+## 📌 Roadmap
  Add Decision Algorhitm between the Card A (Value 1 or 11)
 
  Add animations for dealing cards
